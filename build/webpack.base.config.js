@@ -46,6 +46,13 @@ module.exports = {
                         use: 'css-loader?minimize',
                         fallback: 'vue-style-loader'
                     }) : ['vue-style-loader', 'css-loader']
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                query: {
+                    limit: 10000
+                }
             }
         ]
     },

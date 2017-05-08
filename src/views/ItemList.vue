@@ -94,7 +94,7 @@ export default {
 
 <style lang="stylus">
 .news-view
-  padding-top 100px
+  padding-top 0px
 
 .news-list-nav, .news-list
   background-color #fff
