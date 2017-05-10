@@ -14,7 +14,7 @@ export function createRouter() {
         mode: 'history',
         scrollBehavior: () => ({ y: 0 }),
         routes: [
-            { path: '/top/:page(\\d+)?', component: createListView('top') },
+            { path: '/main/:page(\\d+)?', component: createListView('top') },
             { path: '/new/:page(\\d+)?', component: createListView('new') },
             { path: '/show/:page(\\d+)?', component: createListView('show') },
             { path: '/ask/:page(\\d+)?', component: createListView('ask') },
@@ -22,7 +22,7 @@ export function createRouter() {
             { path: '/item/:id(\\d+)', component: ItemView },
             { path: '/user/:id', component: UserView },
             { path: '/zr', component: usageView },
-            { path: '/', redirect: '/top' }
+            { path: '/', redirect: '/main' }
         ]
     })
 }

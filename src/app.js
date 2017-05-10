@@ -7,8 +7,6 @@ import titleMixin from './util/title'
 import * as filters from './util/filters'
 import Elements from 'element-ui'
 
-
-
 Vue.use(Elements);
 // mixin for handling title
 Vue.mixin(titleMixin);

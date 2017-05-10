@@ -12,7 +12,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/dist/',
-        filename: '[name].[chunkhash].js'
+        filename: '[name].server.[chunkhash].js'
     },
     resolve: {
         alias: {
@@ -66,6 +66,11 @@ module.exports = {
         }),
         new ExtractTextPlugin({
             filename: 'common.[chunkhash].css'
+        }),
+        new webpack.optimize.CommonsChunkPlugin('common.js'),
+        new webpack.ProvidePlugin({
+            jQuery: "jquery",
+            $: "jquery"
         })
     ] : [
         new FriendlyErrorsPlugin()
