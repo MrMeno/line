@@ -6,29 +6,34 @@ const favicon = require('serve-favicon')
 const compression = require('compression')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
-const isProd = process.env.NODE_ENV === 'production'
-const useMicroCache = process.env.MICRO_CACHE !== 'false'
+const isProd = process.env.NODE_ENV === 'production' //全局环境变量，当前为开发环境
+const useMicroCache = process.env.MICRO_CACHE !== 'false' //是否缓存
+const home = require('./function/home')
 const serverInfo =
     `express/${require('express/package.json').version} ` +
-    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`;
+    `vue-server-renderer/${require('vue-server-renderer/package.json').version}`; //ssr，服务器端渲染组件的版本
 const app = express()
-const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8')
+const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8') //前端入口文件
 
-function createRenderer(bundle, options) {
+global.hostAddress = 'localhost'; //192.168.1.202
+global.portNum = '8080'; //8083
+global.ctx = '/mmcms/api'; //mmcms
+
+function createRenderer(bundle, options) { //设置服务器端渲染参数
     return createBundleRenderer(bundle, Object.assign(options, {
         template,
         cache: LRU({
             max: 1000,
             maxAge: 1000 * 60 * 15
         }),
-        basedir: resolve('./dist'),
+        basedir: resolve('./dist'), //webpack输出目录
         runInNewContext: false
     }))
 }
 
 let renderer
 let readyPromise
-if (isProd) {
+if (isProd) { //设置生产环境的参数，ssr组件加载
     const bundle = require('./dist/vue-ssr-server-bundle.json')
     const clientManifest = require('./dist/vue-ssr-client-manifest.json')
     renderer = createRenderer(bundle, {
@@ -40,7 +45,7 @@ if (isProd) {
     })
 }
 
-const serve = (path, cache) => express.static(resolve(path), {
+const serve = (path, cache) => express.static(resolve(path), { //获取完整路径
     maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0
 })
 
@@ -49,8 +54,9 @@ app.use(favicon('./public/img/favicon.ico'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 app.use('/manifest.json', serve('./manifest.json', true))
-app.use('/functions', serve('./api/home', true))
+app.use('/functions', serve('./api/home', false))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
+app.use('/home', home)
 
 
 const microCache = LRU({

@@ -8,10 +8,6 @@ var multipartMiddleware = multiparty();
 var fs = require('fs');
 var stringDecoder = require('string_decoder').StringDecoder;
 
-router.post('/first', function(req, res, next) {
-    res.json({ name: 'aaa', pwd: '123' });
-}); //test function
-
 router.get('/load_banner', function(req, res, next) { //获取该用户的企业ID
         var getheaders = {
             'Content-Type': 'application/json; charset=UTF-8'

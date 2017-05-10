@@ -9,18 +9,18 @@ const isProd = process.env.NODE_ENV === 'production'
 module.exports = {
     devtool: isProd ?
         false : '#cheap-module-source-map',
-    output: {
-        path: path.resolve(__dirname, '../dist'),
+    output: { //打包配置
+        path: path.resolve(__dirname, '../dist'), //输出目录
         publicPath: '/dist/',
-        filename: '[name].server.[chunkhash].js'
+        filename: '[name].server.[chunkhash].js' //文件名命名规则
     },
     resolve: {
-        alias: {
+        alias: { //公共路径指向的别名
             'public': path.resolve(__dirname, '../public')
         }
     },
     module: {
-        noParse: /es6-promise\.js$/, // avoid webpack shimming process
+        noParse: /es6-promise\.js$/, // 加载文件的解决方案
         rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader',
@@ -67,7 +67,6 @@ module.exports = {
         new ExtractTextPlugin({
             filename: 'common.[chunkhash].css'
         }),
-        new webpack.optimize.CommonsChunkPlugin('common.js'),
         new webpack.ProvidePlugin({
             jQuery: "jquery",
             $: "jquery"

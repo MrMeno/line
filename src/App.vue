@@ -195,7 +195,7 @@
       dataDeemo(){
            $.ajax({
             type: "GET",
-            url: "/",
+            url: "/home/load_banner",
             dataType: "json",
             async: false,
             success: function(resquet) {
@@ -203,7 +203,7 @@
                     this.demo = resquet;
                     console.log(this.demo);
                 } else {
-
+             console.log('error')
                 }
             }
         });
