@@ -154,9 +154,9 @@
      <div class="col col-md-1">
     </div>
     </div>
-    <section> 
+  <!--  <section> 
     <img style="width:100%;height:300px" src='../public/img/banner.png' alt="">
-    </section>
+    </section> -->
      </div>
       <router-view class="view"></router-view>
   </div>
@@ -164,7 +164,6 @@
 
 
 <script>
-  import lister from './components/lister.vue'
   import {animate} from './directives/methods'
   import $ from 'jquery'
   export default {
@@ -193,11 +192,17 @@
          });
       },
       dataDeemo(){
+        var type='3';
+        var staffType='1';
            $.ajax({
             type: "GET",
-            url: "/user/advisory/list",
+            url: "/home/lists",
             dataType: "json",
             async: false,
+            data:{
+              type:type,
+            staffType:staffType
+            },
             success: function(resquet) {
                 if (resquet != null) {
                     this.demo = resquet;

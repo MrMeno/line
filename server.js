@@ -52,7 +52,7 @@ const serve = (path, cache) => express.static(resolve(path), { //获取完整路
     maxAge: cache && isProd ? 60 * 60 * 24 * 30 : 0
 })
 
-app.use(compression({ threshold: 0 }))
+app.use(compression({ threshold: 0 })) //环参应用
 app.use(favicon('./public/img/favicon.ico'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))

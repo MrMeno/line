@@ -1,4 +1,7 @@
 <template>
+
+  <div>
+
   <li class="news-item">
     <span class="score">{{ item.score }}</span>
     <span class="title">
@@ -24,6 +27,7 @@
     </span>
     <span class="label" v-if="item.type !== 'story'">{{ item.type }}</span>
   </li>
+  </div>
 </template>
 
 <script>
