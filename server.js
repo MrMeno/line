@@ -1,3 +1,6 @@
+/*create by MrM */
+/*2017-5-3*/
+/*lastmodified:2017-5-10*/
 const fs = require('fs')
 const path = require('path')
 const LRU = require('lru-cache')
@@ -111,11 +114,11 @@ function render(req, res) {
     })
 }
 
-app.get('*', isProd ? render : (req, res) => {
+app.get('*', isProd ? render : (req, res) => { //判定开发环境
     readyPromise.then(() => render(req, res))
 })
 
-const port = process.env.PORT || 8088
+const port = process.env.PORT || 8088 //端口监听开启
 app.listen(port, () => {
     console.log(`server started at localhost:${port}`)
 })

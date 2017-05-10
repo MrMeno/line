@@ -195,7 +195,7 @@
       dataDeemo(){
            $.ajax({
             type: "GET",
-            url: "/home/load_banner",
+            url: "/user/advisory/list",
             dataType: "json",
             async: false,
             success: function(resquet) {
