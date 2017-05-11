@@ -1,5 +1,6 @@
 <template>
   <div class="news-view">
+  <img style="width:100%;height:300px" src='../../public/img/banner.png' alt="">
     <transition :name="transition">
       <div class="news-list" :key="displayedPage" v-if="displayedPage > 0">
         <transition-group tag="ul" name="item">

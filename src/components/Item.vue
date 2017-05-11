@@ -1,7 +1,6 @@
 <template>
 
   <div>
-
   <li class="news-item">
     <span class="score">{{ item.score }}</span>
     <span class="title">

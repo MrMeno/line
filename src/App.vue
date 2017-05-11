@@ -16,7 +16,7 @@
             <div class="col col-md-6">
               <div style="margin-top: 15px;">
               <el-input placeholder="请输入内容" id='search' v-model="input" @focus='changeLength()' @blur='initWidth()' class='search'>
-                 <el-button class='btn_search'  @click='dataDeemo()' slot="append" icon="search"></el-button>
+                 <el-button class='btn_search'  @click="dataDeemo('','')" slot="append" icon="search"></el-button>
               </el-input>
             </div>
             </div>
@@ -43,7 +43,7 @@
                 </el-dropdown-item>
                 <el-dropdown-item>
                 <i class="fa fa-user-plus" aria-hidden="true"></i>
-                <span class='space'>个人中心</span>
+                <span class='space'><router-link to="/userCenter">个人中心</router-link></span>
                 </el-dropdown-item>
                <el-dropdown-item>
                <i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -191,9 +191,9 @@
                 animate(inputs, {width: 400},0.1, 0.01);
          });
       },
-      dataDeemo(){
-        var type='3';
-        var staffType='1';
+      dataDeemo(type,staffType){
+        type = (type!='')?type:'1';
+        staffType = (staffType!='')?staffType:'1';
            $.ajax({
             type: "GET",
             url: "/home/lists",
