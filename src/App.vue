@@ -15,7 +15,7 @@
             </div>
             <div class="col col-md-6">
               <div style="margin-top: 15px;">
-              <el-input placeholder="请输入内容" id='search' v-model="input" @focus='changeLength()' @blur='initWidth()' class='search'>
+              <el-input placeholder="请输入内容" id='search' @focus='changeLength()' @blur='initWidth()' class='search'>
                  <el-button class='btn_search'  @click="dataDeemo('','')" slot="append" icon="search"></el-button>
               </el-input>
             </div>
@@ -75,14 +75,14 @@
                 <span class='space'>影视植入资源</span>
               </template>
              <el-menu-item class='child-item' index="1-1" >
-           <div class="row"  >
+           <div class="row" @mouseover="showDiv('1')" @mouseout="hideDiv()" >
              <div class="col col-md-4 text-right">  
               <i class="fa fa-television" aria-hidden="true"></i>
              </div>
              <div class="col col-md-4"> 
-              <span class="space"  @mouseover="popoverDiv('0')" @mouseout="popoverDiv('0')">
+            <span class="space"  >
                电视剧
-             </span>
+             </span>      
            </div>
              <div class="col col-md-4 text-center">
               <i class="fa fa-angle-right" aria-hidden="true">  
@@ -91,7 +91,7 @@
            </div>
            </el-menu-item>
             <el-menu-item class='child-item' index="1-2">
-             <div class="row">
+             <div class="row" @mouseover="showDiv('2')" @mouseout="hideDiv()">
              <div class="col col-md-4 text-right">  
               <i class="fa fa-youtube-play" aria-hidden="true"></i>
              </div>
@@ -107,7 +107,7 @@
            </div>
           </el-menu-item>
              <el-menu-item class='child-item' index="1-3">
-             <div class="row">
+             <div class="row" @mouseover="showDiv('3')" @mouseout="hideDiv()">
              <div class="col col-md-4 text-right">  
               <i class="fa fa-tachometer" aria-hidden="true"></i>
              </div>
@@ -123,7 +123,7 @@
            </div>
            </el-menu-item>
             <el-menu-item class='child-item' index="1-4">
-                <div class="row">
+                <div class="row" @mouseover="showDiv('4')" @mouseout="hideDiv()">
              <div class="col col-md-4 text-right">  
               <i class="fa fa-internet-explorer" aria-hidden="true"></i>
              </div>
@@ -146,17 +146,81 @@
         <el-menu-item index="6">加入我们</el-menu-item>
     </el-menu>
       <div class="line"></div>
-      <div class="area_tv hide">
-        
+      <div class="area" style='display:none' @mouseover="showDiv('1')" @mouseout="hideDiv()">
+        <div class="container" style='padding-top:20px'>
+        <div class="row" style='font-size:13px'><!--first line -s-->
+        <div class="col col-md-1" style='padding-top:5px'>
+        类型
+        </div>
+        <div class="col col-md-11">
+        <div class="row">
+        <div class="col col-md-1" style='padding-top:5px'>
+        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        </div>
+        <div class="col col-md-1" v-for='data in type_data' style='padding-top:5px'>
+          {{data.name}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        </div>
+        </div>
+        </div>
+        </div><!--first line -e-->
+
+       <div class="row" style='font-size:13px;padding-top:10px'><!--sec line -s-->
+        <div class="col col-md-1" style='padding-top:5px'>
+        演员
+        </div>
+        <div class="col col-md-11">
+        <div class="row text-center">
+        <div class="col col-md-1" style='padding-top:5px'>
+        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        </div>
+        <div class="col col-md-1" v-for='data in dis_data.actor' style='padding-top:5px'>
+         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style='color:#eee'>|</span></span>
+        </div>
+        </div>
+        </div>
+        </div><!--sec line -e-->
+
+         <div class="row" style='font-size:13px;padding-top:10px'><!--3td line -s-->
+        <div class="col col-md-1" style='padding-top:5px'>
+        导演
+        </div>
+        <div class="col col-md-11">
+        <div class="row text-center">
+        <div class="col col-md-1" style='padding-top:5px'>
+        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        </div>
+        <div class="col col-md-1" v-for='data in dis_data.director' style='padding-top:5px'>
+         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span style='color:#eee'>|</span></span>
+        </div>
+        </div>
+        </div>
+        </div><!--3td line -e-->
+
+        <div class="row" style='font-size:13px;padding-top:10px'><!--3td line -s-->
+         <div class="col col-md-1" style='padding-top:5px'>
+         编剧
+        </div>
+        <div class="col col-md-11">
+        <div class="row text-center">
+        <div class="col col-md-1" style='padding-top:5px'>
+        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        </div>
+        <div class="col col-md-1" v-for='data in dis_data.swriter' style='padding-top:5px'>
+         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <span style='color:#eee'>|</span></span>
+        </div>
+        </div>
+        </div>
+        </div><!--3td line -e-->
+        </div>
       </div>
       </nav>
     </div>
      <div class="col col-md-1">
     </div>
     </div>
-  <!--  <section> 
-    <img style="width:100%;height:300px" src='../public/img/banner.png' alt="">
-    </section> -->
      </div>
       <router-view class="view"></router-view>
   </div>
@@ -167,12 +231,30 @@
   import {animate} from './directives/methods'
   import $ from 'jquery'
   export default {
+    mounted(){
+     this.tv_data.actor=this.dataDeemo('1','1');
+     this.tv_data.director=this.dataDeemo('1','2');
+     this.tv_data.swriter=this.dataDeemo('1','3');
+     this.film_data.actor=this.dataDeemo('2','1');
+     this.film_data.director=this.dataDeemo('2','2');
+     this.film_data.swriter=this.dataDeemo('2','3');
+     this.zy_data.actor=this.dataDeemo('3','1');
+     this.zy_data.director=this.dataDeemo('3','2');
+     this.zy_data.swriter=this.dataDeemo('3','3'); 
+     this.net_data.actor=this.dataDeemo('4','1');
+     this.net_data.director=this.dataDeemo('4','2');
+     this.net_data.swriter=this.dataDeemo('4','3'); 
+    },
     data() {
       return {
         activeIndex: '1',
         activeIndex2: '1',
-        input:'',
-        demo:[]
+        tv_data:[],
+        film_data:[],
+        zy_data:[],
+        net_data:[],
+        dis_data:[],
+        type_data:[]
       };
     },
     methods: {
@@ -191,9 +273,9 @@
                 animate(inputs, {width: 400},0.1, 0.01);
          });
       },
-      dataDeemo(type,staffType){
+      dataDeemo(type,staffType){//通用搜索框接口
+        var datas=[];
         type = (type!='')?type:'1';
-        staffType = (staffType!='')?staffType:'1';
            $.ajax({
             type: "GET",
             url: "/home/lists",
@@ -205,26 +287,68 @@
             },
             success: function(resquet) {
                 if (resquet != null) {
-                    this.demo = resquet;
-                    console.log(this.demo);
+                    datas = resquet.data;
                 } else {
              console.log('error')
                 }
             }
         });
+        return datas;
       },
-      popoverDiv(e){
-        if(e=='0'){
-          $('.area_tv').toggleClass('hide');
+      getType(type){//通用搜索框接口
+        var datas;
+               $.ajax({
+            type: "GET",
+            url: "/home/type_lists",
+            dataType: "json",
+            async: false,
+            data:{
+              type:type
+            },
+            success: function(resquet) {
+                if (resquet != null) {
+                    datas = resquet.data;
+                } else {
+             console.log('error')
+                }
+            }
+        });
+        return datas;
+      },
+      showDiv(e){//移入移出事件
+      this.type_data=this.getType(e);
+        if(e=='1'){
+           this.dis_data=this.tv_data;
+          this.showThis();    
         }
+        else if(e=='2'){
+            this.dis_data=this.film_data;
+             this.showThis();
+        } else if(e=='3'){
+            this.dis_data=this.zy_data;
+              this.showThis();
+        }else if(e=='4'){
+            this.dis_data=this.net_data;
 
+             this.showThis();
+        }
+      },
+      showThis(){
+       $(".area").stop().fadeTo("slow",1,function(){
+            $(this).css("display", "block");
+        })
+      },
+      hideDiv(){
+         $(".area").stop().fadeTo("slow",0,function(){
+            $(this).css("display", "none");
+        })
       }
     }
   }
 </script>
 
 <style>
-  @import '../node_modules/element-ui/lib/theme-default/index.css';
+  @import '../public/css/element-ui/lib/theme-default/index.css';
   @import '../node_modules/bootstrap/dist/css/bootstrap.css';
   @import '../node_modules/font-awesome/css/font-awesome.css';
 
@@ -260,6 +384,12 @@
     top:60px!important;
      
   }
+  .text-line{
+     word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;/*clip */
+  }
   .child-item {
     text-align: center!important;
     width: 100%!important;
@@ -275,7 +405,7 @@
       color:#666!important;
       background-color: white!important;
     }
-    .area_tv{
+    .area{
       width:82.33%;
       height:270px;
       background-color:white;
