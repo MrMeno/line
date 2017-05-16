@@ -355,11 +355,12 @@
 
 .el-pagination__sizes .el-input .el-input__inner {
     font-size: 13px;
-    border-color: #d1dbe5
+    border-color: #d1dbe5;
+    outline: none;
 }
 
 .el-pagination__sizes .el-input .el-input__inner:hover {
-    border-color: #20a0ff
+    outline: none;
 }
 
 .el-pagination__jump {
@@ -770,7 +771,8 @@
 }
 
 .el-menu--dark .el-submenu .el-menu .el-menu-item:hover {
-    background-color: #48576a
+    background-color: #48576a;
+    color: white
 }
 
 .el-menu--horizontal .el-menu-item {
@@ -840,12 +842,13 @@
 }
 
 .el-menu--horizontal>.el-submenu.is-active {
-    border-bottom: 0px solid white;
-    color: #e50012
+    border-bottom: 0px solid #e50012;
+    color: white
 }
 
 .el-menu--horizontal>.el-submenu:hover {
-    color: white
+    color: white;
+    border-bottom: 0px solid #e50012;
 }
 
 .el-menu--horizontal.el-menu--dark .el-menu-item:hover,
@@ -866,7 +869,7 @@
 
 .el-menu--horizontal.el-menu--dark .el-submenu .el-menu-item.is-active,
 .el-menu-item.is-active {
-    color: #e50012
+    color: #4792de
 }
 
 .el-menu-item [class^=el-icon-] {
@@ -908,7 +911,13 @@
 }
 
 .el-submenu.is-active .el-submenu__title {
-    border-bottom-color: #fff
+    border-bottom-color: white;
+    color: #e50012
+}
+
+.el-submenu.is-active .el-submenu__title:hover {
+    border-bottom-color: #e50012;
+    color: white
 }
 
 .el-submenu__title {
@@ -1385,16 +1394,17 @@
 }
 
 .el-select:hover .el-input__inner {
-    border-color: #8391a5
+    border-color: black
 }
 
 .el-select .el-input__inner {
+    outline: none;
     cursor: pointer;
     padding-right: 35px
 }
 
 .el-select .el-input__inner:focus {
-    border-color: #20a0ff
+    outline: none;
 }
 
 .el-select .el-input .el-input__icon {
@@ -1435,7 +1445,7 @@
 }
 
 .el-select .el-input.is-disabled .el-input__inner:hover {
-    border-color: #d1dbe5
+    border-color: black
 }
 
 .el-select>.el-input {
@@ -3968,7 +3978,7 @@
 
 .el-input-number__decrease:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled),
 .el-input-number__increase:hover:not(.is-disabled)~.el-input .el-input__inner:not(.is-disabled) {
-    border-color: #20a0ff
+    border-color: black
 }
 
 .el-input-number__decrease.is-disabled,
@@ -8252,7 +8262,7 @@
 
 .el-input.is-disabled .el-input__inner {
     background-color: #eef1f6;
-    border-color: #d1dbe5;
+    border-color: black;
     color: #bbb;
     cursor: not-allowed
 }
@@ -8284,15 +8294,15 @@
     appearance: none;
     background-color: #fff;
     background-image: none;
-    border-radius: 4px;
-    border: 1px solid #bfcbd9;
+    border-radius: 0px;
+    border: 1px solid black;
     box-sizing: border-box;
     color: #1f2d3d;
     display: block;
     font-size: inherit;
     height: 36px;
     line-height: 1;
-    outline: 0;
+    outline: none;
     padding: 3px 10px;
     transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
     width: 100%
@@ -8329,8 +8339,8 @@
 }
 
 .el-input__inner:focus {
-    outline: 0;
-    border-color: #20a0ff
+    outline: none;
+    border-color: black
 }
 
 .el-input__icon {

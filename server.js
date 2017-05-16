@@ -18,8 +18,8 @@ const serverInfo =
 const app = express()
 const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8') //前端入口文件
 
-global.hostAddress = 'localhost'; //192.168.1.202
-global.portNum = '8080'; //8083
+global.hostAddress = '192.168.1.202'; //192.168.1.202
+global.portNum = '80'; //8083
 global.ctx = '/mmcms/api'; //mmcms
 
 function createRenderer(bundle, options) { //设置服务器端渲染参数
@@ -53,7 +53,7 @@ const serve = (path, cache) => express.static(resolve(path), { //获取完整路
 })
 
 app.use(compression({ threshold: 0 })) //环参应用
-app.use(favicon('./public/img/favicon.ico'))
+// app.use(favicon('./public/img/favicon.ico'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 app.use('/manifest.json', serve('./manifest.json', true))

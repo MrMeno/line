@@ -1,154 +1,155 @@
 <template>
   <div class="news-view">
   <img style="width:100%;height:300px" src='../../public/img/banner.png' alt="">
-    <transition :name="transition">
-      <div class="news-list" :key="displayedPage" v-if="displayedPage > 0">
-        <transition-group tag="ul" name="item">
-          <item v-for="item in displayedItems" :key="item.id" :item="item">
-          </item>
-        </transition-group>
-      </div>
-    </transition>
+    <div class="container-fluid">
+    <div class="row" style='padding:30px'>
+     <div class="col col-md-3">
+        <strong><big>电视剧</big></strong><span style='padding:30px'>最新电视剧资源</span>
+     </div>
+    </div>
+    <div class="row">
+    <div class="col col-md-1"></div>
+    <div class="col col-md-10">    
+        <div class="row">
+          <div class="col col-md-3" v-for='item in listData' style='height:400px;cursor:pointer;'>
+            <div class="row" style='margin:10px;border:solid 1px #eee'>
+               <img v-bind:src="item.pic_url" class='pic_list_3'>
+                 <div class="row">
+                    <div class="time_counter">
+                        <p v-bind:html="timeCouter(item.deadline)">
+                       
+                        </p>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+    <div class="col col-md-1"></div>
+        
+    </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { watchList } from '../api'
-import Item from '../components/Item.vue'
-
+  import $ from 'jquery'
 export default {
   name: 'item-list',
-
-  components: {
-    Item
+  mounted(){
+  this.listData =this.getList();
+ 
   },
-
-  props: {
-    type: String
-  },
-   mounted(){
-     
-   },
-
-  data () {
+  data (){
     return {
-      transition: 'slide-right',
-      displayedPage: Number(this.$store.state.route.params.page) || 1,
-      displayedItems: this.$store.getters.activeItems
+      listData:[]
     }
   },
-
   computed: {
-    page () {
-      return Number(this.$store.state.route.params.page) || 1
-    },
-    maxPage () {
-      const { itemsPerPage, lists } = this.$store.state
-      return Math.ceil(lists[this.type].length / itemsPerPage)
-    },
-    hasMore () {
-      return this.page < this.maxPage
-    }
-  },
 
-  beforeMount () {
-    if (this.$root._isMounted) {
-      this.loadItems(this.page)
-    }
-    // watch the current list for realtime updates
-    this.unwatchList = watchList(this.type, ids => {
-      this.$store.commit('SET_LIST', { type: this.type, ids })
-      this.$store.dispatch('ENSURE_ACTIVE_ITEMS').then(() => {
-        this.displayedItems = this.$store.getters.activeItems
-      })
-    })
   },
-
-  beforeDestroy () {
-    this.unwatchList()
-  },
-
-  watch: {
-    page (to, from) {
-      this.loadItems(to, from)
-    }
-  },
-
   methods: {
-    loadItems (to = this.page, from = -1) {
-      this.$bar.start()
-      this.$store.dispatch('FETCH_LIST_DATA', {
-        type: this.type
-      }).then(() => {
-        if (this.page < 0 || this.page > this.maxPage) {
-          this.$router.replace(`/${this.type}/1`)
-          return
+    getList(){
+      var datas=[];
+        $.ajax({
+            type: "GET",
+            url: "/home/drama/solr",
+            dataType: "json",
+            async: false,
+            data:{
+             type:2,
+             page:1
+            },
+            success: function(resquet) {
+                if (resquet != null) {
+                    datas = resquet.data;
+                } else {
+                    console.log('error')
+                }
+            }
+        });
+      console.log(datas);
+      return datas;
+    },timeCouter(Dates){
+      this.getTime=function(){
+      var myDate = new Date();
+        myDate.getYear(); //获取当前年份(2位)
+        myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+        myDate.getDate(); //获取当前日(1-31)
+        myDate.getHours(); //获取当前小时数(0-23)
+        myDate.getMinutes(); //获取当前分钟数(0-59)
+        myDate.getSeconds(); //获取当前秒数(0-59)
+        Date.prototype.Format = function(fmt) { //author: meizz 
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+         if (new RegExp("(" + k + ")").test(fmt))
+         fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+        return myDate;
         }
-        this.transition = from === -1
-          ? null
-          : to > from ? 'slide-left' : 'slide-right'
-        this.displayedPage = to
-        this.displayedItems = this.$store.getters.activeItems
-        this.$bar.finish()
-      })
+        this.checkTime=function(i) { //将0-9的数字前面加上0，例1变为01 
+        if (i < 10) {
+            i = "0" + i;
+           }
+          return i;
+          };
+        var endDate = new Date(Dates);
+        var startDate =this.getTime();
+        if (endDate > startDate) {
+            var leftTime = endDate - startDate;
+            var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟 
+            var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数 
+            days = this.checkTime(days);
+            hours = this.checkTime(hours);
+            minutes = this.checkTime(minutes);
+            seconds = this.checkTime(seconds);
+            var str = "<span class='times'>" + days + "</span>天" +
+                "<span class='times'>" + hours + "</span>时" +
+                "<span class='times'>" + minutes + "</span>分" +
+                "<span class='times'>" + seconds + "</span>秒";
+            return str;
+        } else {
+            var str = "项目已过期";
+            return str;
+        }
     }
+
   }
 }
 </script>
 
-<style lang="stylus">
-.news-view
-  padding-top 0px
+<style tyle='text/css'>
+.pic_list_3 {
+    width: 100%;
+    height: 300px;
+    border: solid 1px #ccc;
+}
 
-.news-list-nav, .news-list
-  background-color #fff
-  border-radius 2px
+.time_counter {
+    height: 35px;
+    width: 250px;
+    color:white;
+    font-weight:600;
+    line-height:30px;
+    font-size:13px;
+    background-color: black;
+    left: 18.75%;
+    top: 0%;
+    position: absolute;
+    opacity: 1;
+}
 
-.news-list-nav
-  padding 15px 30px
-  position fixed
-  text-align center
-  top 55px
-  left 0
-  right 0
-  z-index 998
-  box-shadow 0 1px 2px rgba(0,0,0,.1)
-  a
-    margin 0 1em
-  .disabled
-    color #ccc
-
-.news-list
-  position absolute
-  margin 30px 0
-  width 100%
-  transition all .5s cubic-bezier(.55,0,.1,1)
-  ul
-    list-style-type none
-    padding 0
-    margin 0
-
-.slide-left-enter, .slide-right-leave-to
-  opacity 0
-  transform translate(30px, 0)
-
-.slide-left-leave-to, .slide-right-enter
-  opacity 0
-  transform translate(-30px, 0)
-
-.item-move, .item-enter-active, .item-leave-active
-  transition all .5s cubic-bezier(.55,0,.1,1)
-
-.item-enter
-  opacity 0
-  transform translate(30px, 0)
-
-.item-leave-active
-  position absolute
-  opacity 0
-  transform translate(30px, 0)
-
-@media (max-width 600px)
-  .news-list
-    margin 10px 0
 </style>
