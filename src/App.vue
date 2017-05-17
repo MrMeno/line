@@ -223,6 +223,7 @@
     </div>
      </div>
       <router-view class="view"></router-view>
+      <footers></footers>
   </div>
 </template>
 
@@ -230,6 +231,7 @@
 <script>
   import {animate} from './directives/methods'
   import $ from 'jquery'
+  import footers from './components/footer.vue'
   export default {
     mounted(){
      this.tv_data.actor=this.dataDeemo('1','1');
@@ -256,6 +258,9 @@
         dis_data:[],
         type_data:[]
       };
+    },
+    components:{
+      footers
     },
     methods: {
       handleSelect(key, keyPath) {

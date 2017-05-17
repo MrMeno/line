@@ -1,9 +1,7 @@
 <template>
-<div class='templates'>
       <div class="row" id='modes'>
-      <div class="col col-md-3"  v-for='items in labelList'>
-       {{items.adver_type_name}}
-      </div>
+      <div class="col col-md-3 text-center" id='tabs' style='padding-top:10px'  v-for='items in labelList'>
+         {{items.adver_type_name}}
       </div>
  </div>
 </template>
@@ -28,20 +26,25 @@
     }
 </script>
 <style>
-    .templates{
+
+    #modes{
+      position:absolute;
+      bottom:30%;
+      left:8.5%;
         opacity:0.7;
-        width:100%;
+        width:91.5%;
         height:auto;
       word-break: keep-all;
     white-space: nowrap;
     font-size:12px;
     overflow: hidden;
     text-overflow: ellipsis;/*clip */
+    color:white;
+    min-height:80px;
+    background-color:black
 
     }
-    #modes{
-      position:absolute;
-      bottom:30%
-
+    .show{
+        display:block
     }
 </style>

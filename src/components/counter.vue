@@ -52,7 +52,7 @@
             var hour = self.checkTime(parseInt(leftTime / 1000 / 60 / 60 % 24, 10),10); //计算剩余的小时 
             var min = self.checkTime(parseInt(leftTime / 1000 / 60 % 60, 10),10); //计算剩余的分钟 
             var sec = self.checkTime(parseInt(leftTime / 1000 % 60, 10),10);
-			return  '倒计时   '+ day+':' +hour + ':' + min + ':' + sec ;
+			return  '倒计时   '+ day+'  :  ' +hour + '  :  ' + min + '  :  ' + sec ;
 		}
 
 

@@ -12,17 +12,17 @@
     <div class="col col-md-10">    
         <div class="row">
           <div class="col col-md-3" v-for='item in listData' style='height:400px;cursor:pointer;'>
-            <div class="row" style='margin:10px'>
-               <img v-bind:src="item.pic_url" class='pic_list_3'>
+            <div class="row" style="margin:10px">
+             <img v-bind:src="item.pic_url" class='pic_list_3'> 
                  <div class="row">
                     <div class="time_counter">
                         <counter :endTime="item.deadline"></counter>
                     </div>
                 </div>
                 <div class="row">
-                   <div class="modules">
+                  <div class="col col-md-12">
                       <modules :labelList='item.adver_type_list'></modules>
-                    </div>
+                  </div>
                 </div>
                 <div class="row text-left" style='font-size:13px;padding-top:10px'>
                    <div class="col col-md-12">
