@@ -80,7 +80,7 @@
               <i class="fa fa-television" aria-hidden="true"></i>
              </div>
              <div class="col col-md-4"> 
-            <span class="space"  >
+            <span class="space" @click="changeType(1)">
                电视剧
              </span>      
            </div>
@@ -96,7 +96,7 @@
               <i class="fa fa-youtube-play" aria-hidden="true"></i>
              </div>
              <div class="col col-md-4"> 
-              <span class="space">
+              <span class="space" @click="changeType(2)">
                电影
              </span>
            </div>
@@ -112,7 +112,7 @@
               <i class="fa fa-tachometer" aria-hidden="true"></i>
              </div>
              <div class="col col-md-4"> 
-              <span class="space">
+              <span class="space" @click="changeType(3)">
                综艺
              </span>
            </div>
@@ -128,7 +128,7 @@
               <i class="fa fa-internet-explorer" aria-hidden="true"></i>
              </div>
              <div class="col col-md-4"> 
-              <span class="space">
+              <span class="space" @click="changeType(4)">
                网络类型
              </span>
            </div>
@@ -139,8 +139,8 @@
            </div>
           </el-menu-item>
           </el-submenu>
-        <el-menu-item index="2">首页</el-menu-item>
-        <el-menu-item index="3">案例咨询</el-menu-item>
+        <el-menu-item index="2"><router-link to="/main">首页</router-link></el-menu-item>
+        <el-menu-item index="3"><router-link to="/detail">案例咨询</router-link></el-menu-item>
         <el-menu-item index="4">技术支持</el-menu-item>
         <el-menu-item index="5">关于我们</el-menu-item>
         <el-menu-item index="6">加入我们</el-menu-item>
@@ -149,67 +149,67 @@
       <div class="area" style='display:none' @mouseover="showDiv('1')" @mouseout="hideDiv()">
         <div class="container" style='padding-top:20px'>
         <div class="row" style='font-size:13px'><!--first line -s-->
-        <div class="col col-md-1" style='padding-top:5px'>
+        <div class="col col-md-1" style='margin-top:6px;'>
         类型
         </div>
         <div class="col col-md-11">
         <div class="row">
-        <div class="col col-md-1" style='padding-top:5px'>
-        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        <div class="col col-md-1" style='margin-top:6px;color:#666;'>
+        全部
         </div>
-        <div class="col col-md-1" v-for='data in type_data' style='padding-top:5px'>
-          {{data.name}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        <div class="col col-md-1" v-for='data in type_data' style='margin-top:6px;color:#333;border-left:solid 1px #ddd'>
+          {{data.name}}
         </div>
         </div>
         </div>
         </div><!--first line -e-->
 
        <div class="row" style='font-size:13px;padding-top:10px'><!--sec line -s-->
-        <div class="col col-md-1" style='padding-top:5px'>
+        <div class="col col-md-1" style='margin-top:6px;'>
         演员
         </div>
         <div class="col col-md-11">
         <div class="row text-center">
-        <div class="col col-md-1" style='padding-top:5px'>
-        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        <div class="col col-md-1" style='margin-top:6px;color:#666'>
+        全部 
         </div>
-        <div class="col col-md-1" v-for='data in dis_data.actor' style='padding-top:5px'>
-         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span style='color:#eee'>|</span></span>
+        <div class="col col-md-1" v-for='data in dis_data.actor' style='margin-top:6px;color:#333;color:#333;border-left:solid 1px #ddd'>
+         <span class='text-line'>{{data.displayName}}
+          </span>
         </div>
         </div>
         </div>
         </div><!--sec line -e-->
 
          <div class="row" style='font-size:13px;padding-top:10px'><!--3td line -s-->
-        <div class="col col-md-1" style='padding-top:5px'>
+        <div class="col col-md-1" style='margin-top:6px;'>
         导演
         </div>
         <div class="col col-md-11">
         <div class="row text-center">
-        <div class="col col-md-1" style='padding-top:5px'>
-        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        <div class="col col-md-1" style='margin-top:6px;color:#666'>
+        全部
         </div>
-        <div class="col col-md-1" v-for='data in dis_data.director' style='padding-top:5px'>
-         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span style='color:#eee'>|</span></span>
+        <div class="col col-md-1" v-for='data in dis_data.director' style='margin-top:6px;color:#333;border-left:solid 1px #ddd'>
+         <span class='text-line'>{{data.displayName}}
+          </span>
         </div>
         </div>
         </div>
         </div><!--3td line -e-->
 
         <div class="row" style='font-size:13px;padding-top:10px'><!--3td line -s-->
-         <div class="col col-md-1" style='padding-top:5px'>
+         <div class="col col-md-1" style='margin-top:6px;'>
          编剧
         </div>
         <div class="col col-md-11">
         <div class="row text-center">
-        <div class="col col-md-1" style='padding-top:5px'>
-        全部 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='color:#eee'>|</span>
+        <div class="col col-md-1" style='margin-top:6px;color:#666'>
+        全部
         </div>
-        <div class="col col-md-1" v-for='data in dis_data.swriter' style='padding-top:5px'>
-         <span class='text-line'>{{data.displayName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          <span style='color:#eee'>|</span></span>
+        <div class="col col-md-1" v-for='data in dis_data.swriter' style='margin-top:6px;color:#333;border-left:solid 1px #ddd'>
+         <span class='text-line'>{{data.displayName}}
+          </span>
         </div>
         </div>
         </div>
@@ -277,6 +277,9 @@
            animate(inputs, {width: 500},2, 0.01, function(){
                 animate(inputs, {width: 400},0.1, 0.01);
          });
+      },
+      changeType(type){
+         
       },
       dataDeemo(type,staffType){//通用搜索框接口
         var datas=[];
@@ -398,7 +401,7 @@
   .child-item {
     text-align: center!important;
     width: 100%!important;
-    height:75.5px!important;
+    height:80px!important;
     line-height: 50px!important;
     padding: 10px 0px!important;
     background-color: #666!important;
@@ -406,13 +409,16 @@
     border-bottom: solid 1px #777!important;
 
   }
+  .child-item{
+    color:white
+  }
     .child-item:hover{
       color:#666!important;
       background-color: white!important;
     }
     .area{
       width:82.33%;
-      height:270px;
+      height:290px;
       background-color:white;
       z-index:1;
       position:absolute;

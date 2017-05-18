@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <span style='font-size:14px'>
         {{times}}
     </span>
 </template>
@@ -52,7 +52,7 @@
             var hour = self.checkTime(parseInt(leftTime / 1000 / 60 / 60 % 24, 10),10); //计算剩余的小时 
             var min = self.checkTime(parseInt(leftTime / 1000 / 60 % 60, 10),10); //计算剩余的分钟 
             var sec = self.checkTime(parseInt(leftTime / 1000 % 60, 10),10);
-			return  '倒计时   '+ day+'  :  ' +hour + '  :  ' + min + '  :  ' + sec ;
+			return  '倒计时   '+ day+' 天 ' +hour + '  时  ' + min + '  分 ' + sec+'秒' ;
 		}
 
 

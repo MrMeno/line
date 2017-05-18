@@ -1,6 +1,6 @@
 <template>
   <div class="news-view">
-  <img style="width:100%;height:300px" src='../../public/img/banner.png' alt="">
+  <img style="width:100%;height:320px" src='../../public/img/banner.png' alt="">
     <div class="container-fluid">
     <div class="row" style='padding:30px'>
      <div class="col col-md-3">
@@ -24,15 +24,17 @@
                       <modules :labelList='item.adver_type_list'></modules>
                   </div>
                 </div>
-                <div class="row text-left" style='font-size:13px;padding-top:10px'>
+                <div class="row text-left" style='font-size:13px;padding-top:12px'>
                    <div class="col col-md-12">
                    <span>{{"《"+item.name+"》"}}</span>
                    </div>
                 </div>
 
-                 <div class="row text-left" style='font-size:13px;padding-top:10px;color:#999;font-size:10px'>
+                 <div class="row text-left" style='font-size:13px;padding-top:10px;color:#999;font-size:12px'>
                    <div class="col col-md-2">
-                  <span class='text-line'> 主演：</span>
+                    <span class='text-line'> 
+                     主演：
+                    </span>
                    </div>
                    <div class="col col-md-2"  v-for='items in item.actor_list'>
                       <span class='text-line'> {{items.staff_name}}</span>
@@ -62,7 +64,8 @@ export default {
     },
   data (){
     return {
-      listData:[]
+      listData:[],
+      type:'1'
     }
   },
   computed: {
@@ -81,7 +84,7 @@ export default {
             dataType: "json",
             async: false,
             data:{
-             type:2,
+             type:self.type,
              page:1
             },
             success: function(resquet) {
@@ -100,23 +103,23 @@ export default {
 
 <style tyle='text/css'>
 .pic_list_3 {
-    width: 100%;
-    height: 300px;
+    width: 256px;
+    height: 358px;
     border: solid 1px #ccc;
 }
 
 .time_counter {
-    height: 30px;
-    width: 50%;
+    height: 20px;
+    width: 60%;
     color:white;
     font-weight:600;
-    line-height:30px;
-    font-size:13px;
+    line-height:20px;
+    font-size:14px;
     background-color: black;
-    left: 25%;
-    top: 3%;
+    left: 20%;
+    top: 2.5%;
     position: absolute;
-    opacity: 1;
+    opacity: 0.8;
 }
 
 </style>

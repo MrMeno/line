@@ -53,7 +53,7 @@ const serve = (path, cache) => express.static(resolve(path), { //获取完整路
 })
 
 app.use(compression({ threshold: 0 })) //环参应用
-// app.use(favicon('./public/img/favicon.ico'))
+    // app.use(favicon('./public/img/favicon.ico'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 app.use('/manifest.json', serve('./manifest.json', true))

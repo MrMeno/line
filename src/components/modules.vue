@@ -16,7 +16,7 @@
     }
   },
   mounted(){
-
+     
   },
   computed:{
 
@@ -28,13 +28,13 @@
 <style>
 
     #modes{
-      position:absolute;
-      bottom:30%;
-      left:8.5%;
-        opacity:0.7;
-        width:91.5%;
-        height:auto;
-      word-break: keep-all;
+    position:absolute;
+    bottom:30%;
+    left:19%;
+    opacity:0;
+    width:256px;
+    height:68px;
+    word-break: keep-all;
     white-space: nowrap;
     font-size:12px;
     overflow: hidden;
@@ -46,5 +46,8 @@
     }
     .show{
         display:block
+    }
+    #modes:hover{
+      opacity:0.7
     }
 </style>

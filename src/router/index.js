@@ -1,27 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import mainPage from '../views/ItemList.vue'
+import detailPage from '../views/ItemView.vue'
 
 Vue.use(Router)
 
 // route-level code splitting
-const createListView = id => () => System.import('../views/CreateListView').then(m => m.default(id))
-const ItemView = () => System.import('../views/ItemView.vue')
-const UserView = () => System.import('../views/UserView.vue')
 
 export function createRouter() {
     return new Router({
         mode: 'history',
         scrollBehavior: () => ({ y: 0 }),
         routes: [
-            { path: '/main/:page(\\d+)?', component: createListView('top') },
-            { path: '/new/:page(\\d+)?', component: createListView('new') },
-            { path: '/show/:page(\\d+)?', component: createListView('show') },
-            { path: '/ask/:page(\\d+)?', component: createListView('ask') },
-            { path: '/job/:page(\\d+)?', component: createListView('job') },
-            { path: '/userCenter/:page(\\d+)?', component: createListView('userCenter') },
-            { path: '/item/:id(\\d+)', component: ItemView },
-            { path: '/user/:id', component: UserView },
-            { path: '/', redirect: '/main' }
+            { path: '/main', component: mainPage },
+            { path: '/detail', component: detailPage }
         ]
     })
 }
