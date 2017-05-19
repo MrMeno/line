@@ -223,7 +223,9 @@
     </div>
      </div>
       <router-view class="view"></router-view>
-      <footers></footers>
+     <div class="row"  style='padding-top:30px'>          
+      <footers ></footers>
+     </div>
   </div>
 </template>
 

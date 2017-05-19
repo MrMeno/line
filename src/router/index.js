@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import mainPage from '../views/ItemList.vue'
 import detailPage from '../views/ItemView.vue'
+import { getPermission } from '../util/permit'
 
 Vue.use(Router)
-
-// route-level code splitting
+var roleList = getPermission();
 
 export function createRouter() {
     return new Router({
@@ -14,7 +14,13 @@ export function createRouter() {
         routes: [
             { path: '/', redirect: '/main' },
             { path: '/main', component: mainPage },
-            { path: '/detail', component: detailPage }
+            {
+                path: '/detail',
+                component: detailPage,
+                meta: {
+                    auto: roleList.detail
+                }
+            }
         ]
     })
 }

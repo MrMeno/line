@@ -1,5 +1,5 @@
 <template>
-<div class="row" style='background-color:#f7f7f7;padding:30px'>
+<div class="row" style='background-color:#f7f7f7;padding:50px'>
     <div class="col col-md-12">
         <div class="row">
             <a class="tips">关于我们</a>

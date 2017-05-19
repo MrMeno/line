@@ -97,7 +97,7 @@ function render(req, res) {
     }
 
     const context = {
-        title: '媒大媒小',
+        title: '媒大媒小影视植入平台',
         url: req.url
     }
     renderer.renderToString(context, (err, html) => {

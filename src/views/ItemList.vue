@@ -26,17 +26,18 @@
                 </div>
                 <div class="row text-left" style='font-size:13px;padding-top:12px'>
                    <div class="col col-md-12">
-                   <span style='padding-left:30px'>{{"《"+item.name+"》"}}</span>
+                      <span style='padding-left:30px'>{{"《"+item.name+"》"}}</span>
                    </div>
                 </div>
                  <div class="row text-left" style='font-size:13px;padding-top:5px;padding-left:30px;color:#999;font-size:12px'>
                    <div class="col col-md-2 text-right">
-                    <span class='text-line'> 
+                    <span class='text-line' style='padding-left:10px'> 
                      主演：
                     </span>
                    </div>
-                   <div class="col col-md-2 text-right"  v-for='items in item.actor_list'>
-                      <span class='text-line'>{{items.staff_name}}</span>
+                   <div class="col col-md-2 text-right"  v-for='items in dataCut(item.actor_list)'>
+                      <span class='text-line' v-if="item.actor_list.length!=0">{{items.staff_name}}</span>
+                       <span class='text-line' v-else>暂无</span>
                    </div>
                 </div>
             </div>
@@ -68,10 +69,6 @@ export default {
     }
   },
   computed: {
-   
-  },
-  filters:{
-    
   },
   components:{
     counter:counter,
@@ -99,6 +96,10 @@ export default {
             }
         });
       return datas;
+    },
+    dataCut(data){
+      if(data!=null&&data.length>3)
+       return  data.slice(0,3)
     }
   }
 }
