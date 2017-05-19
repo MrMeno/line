@@ -16,10 +16,10 @@ const serverInfo =
     `express/${require('express/package.json').version} ` +
     `vue-server-renderer/${require('vue-server-renderer/package.json').version}`; //ssr，服务器端渲染组件的版本
 const app = express()
-const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8') //前端入口文件
+const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8') //前端入口模板文件
 
-global.hostAddress = '192.168.1.202'; //192.168.1.202
-global.portNum = '80'; //8083
+global.hostAddress = 'localhost'; //192.168.1.202
+global.portNum = '8080'; //8083
 global.ctx = '/mmcms/api'; //mmcms
 
 function createRenderer(bundle, options) { //设置服务器端渲染参数

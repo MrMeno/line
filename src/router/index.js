@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 import mainPage from '../views/ItemList.vue'
 import detailPage from '../views/ItemView.vue'
-import { getPermission } from '../util/permit'
 
 Vue.use(Router)
-var roleList = getPermission();
+
+
 
 export function createRouter() {
     return new Router({
@@ -15,14 +16,14 @@ export function createRouter() {
             { path: '/', redirect: '/main' },
             { path: '/main', component: mainPage },
             {
-                path: '/detail',
+                path: '/main/detail',
                 component: detailPage,
                 meta: {
-                    auto: roleList.detail
+                    auth: true
                 }
             }
         ]
-    })
+    });
 }
 
 /*<!-- 字符串 -->
