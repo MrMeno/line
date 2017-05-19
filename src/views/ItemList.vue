@@ -12,8 +12,8 @@
     <div class="col col-md-10">    
         <div class="row">
           <div class="col col-md-3" v-for='item in listData' style='height:400px;cursor:pointer;'>
-            <div class="row" style="margin:10px">
-             <img v-bind:src="item.pic_url" class='pic_list_3'> 
+            <div class="row" style="margin:10px;">
+             <img v-bind:src="item.pic_url" class='pic_list_3'>
                  <div class="row">
                     <div class="time_counter">
                         <counter :endTime="item.deadline"></counter>
@@ -26,18 +26,17 @@
                 </div>
                 <div class="row text-left" style='font-size:13px;padding-top:12px'>
                    <div class="col col-md-12">
-                   <span>{{"《"+item.name+"》"}}</span>
+                   <span style='padding-left:30px'>{{"《"+item.name+"》"}}</span>
                    </div>
                 </div>
-
-                 <div class="row text-left" style='font-size:13px;padding-top:10px;color:#999;font-size:12px'>
-                   <div class="col col-md-2">
+                 <div class="row text-left" style='font-size:13px;padding-top:5px;padding-left:30px;color:#999;font-size:12px'>
+                   <div class="col col-md-2 text-right">
                     <span class='text-line'> 
                      主演：
                     </span>
                    </div>
-                   <div class="col col-md-2"  v-for='items in item.actor_list'>
-                      <span class='text-line'> {{items.staff_name}}</span>
+                   <div class="col col-md-2 text-right"  v-for='items in item.actor_list'>
+                      <span class='text-line'>{{items.staff_name}}</span>
                    </div>
                 </div>
             </div>
@@ -69,6 +68,10 @@ export default {
     }
   },
   computed: {
+   
+  },
+  filters:{
+    
   },
   components:{
     counter:counter,
@@ -105,7 +108,8 @@ export default {
 .pic_list_3 {
     width: 256px;
     height: 358px;
-    border: solid 1px #ccc;
+    border: solid 0px #ccc;
+    padding-top:30px
 }
 
 .time_counter {
@@ -117,7 +121,7 @@ export default {
     font-size:14px;
     background-color: black;
     left: 20%;
-    top: 2.5%;
+    top: 10%;
     position: absolute;
     opacity: 0.8;
 }
