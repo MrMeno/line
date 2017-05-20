@@ -80,7 +80,7 @@ export default {
       var datas=[];
         $.ajax({
             type: "GET",
-            url: "/home/drama/solr",
+            url: "/mock.json",
             dataType: "json",
             async: false,
             data:{
@@ -89,7 +89,7 @@ export default {
             },
             success: function(resquet) {
                 if (resquet != null) {
-                    datas = resquet.data;
+                    datas = resquet;
                 } else {
                     console.log('error')
                 }

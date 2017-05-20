@@ -107,7 +107,8 @@
   }
   
   .views {
-    padding: 0px
+    padding: 0px;
+    background-color:#eee
   }
   .parent-items ul{
     border-radius:0px!important;

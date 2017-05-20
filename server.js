@@ -60,6 +60,7 @@ app.use('/manifest.json', serve('./manifest.json', true))
 app.use('/functions', serve('./api/home', false))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
 app.use('/home', home)
+app.use('/mock.json', serve('./function/data.json', true))
 
 
 const microCache = LRU({

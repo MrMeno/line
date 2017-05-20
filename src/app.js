@@ -34,7 +34,9 @@ export function createApp() {
         var isLogin = Boolean(store.state.login) // true用户已登录， false用户未登录　
             　　　　 if (auth && !isLogin && path !== '/main') { // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验 　　　　
                 return next({ path: '/main' }) //  跳转到login页面
-            }　　
+            };
+        var isAdmin = Boolean(store.state.admin)
+
         next() // 进行下一个钩子函数
     })
     return { app, router, store }

@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import store from '../store'
 import mainPage from '../views/ItemList.vue'
 import detailPage from '../views/ItemView.vue'
+import loginPage from '../views/login.vue'
+import registPage from '../views/regist.vue'
 
 Vue.use(Router)
 
@@ -12,14 +14,32 @@ export function createRouter() {
     return new Router({
         mode: 'history',
         scrollBehavior: () => ({ y: 0 }),
-        routes: [
-            { path: '/', redirect: '/main' },
-            { path: '/main', component: mainPage },
+        routes: [{
+                path: '/',
+                redirect: '/main'
+            },
             {
+                path: '/main',
+                component: mainPage
+            },
+            {
+                path: '/login',
+                component: loginPage,
+                meta: {
+                    auth: false //需要验证身份
+                }
+            },
+            {
+                path: '/regist',
+                component: registPage,
+                meta: {
+                    auth: false //需要验证身份
+                }
+            }, {
                 path: '/main/detail',
                 component: detailPage,
                 meta: {
-                    auth: true
+                    auth: true //需要验证身份
                 }
             }
         ]
@@ -28,6 +48,7 @@ export function createRouter() {
 
 /*<!-- 字符串 -->
 <router-link to="home">Home</router-link>
+
 <!-- 渲染结果 -->
 <a href="home">Home</a>
 
