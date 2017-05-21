@@ -1,9 +1,9 @@
 <template>
-<div class="container">
+<div class="container" style='min-height:600px'>
 <div class="row text-center">
 <div class="col col-md-2"></div>
 <div class="col col-md-8">
-<el-steps :space='250' :active="1"  finish-status="success">
+<el-steps :space='250' :active="active"  finish-status="success" v-if="showList[0]">
   <el-step title="创建账户"></el-step>
   <el-step title="填写个人资料"></el-step>
   <el-step title="实名认证"></el-step>
@@ -33,38 +33,15 @@
 </div>
 <div class="col col-md-2"></div>
 </div>
-<div class="row" style='padding-top:50px'>
-	<div class="col col-md-12">
-		<div class="row">
-			<div class="col col-md-4 text-right" style='line-height:30px'>
-				手机号码
-			</div>
-			<div class="col col-md-4 text-left">
-				<el-input v-model="phone"  placeholder="请输入手机号" style='width:100%'></el-input>
-			</div>
-
-		</div>
-		<div class="row" style='padding-top:20px'>
-			<div class="col col-md-4 text-right" style='line-height:30px'>
-				短信验证码
-			</div>
-			<div class="col col-md-3 text-left">
-				<el-input v-model="msg" placeholder="验证码是六位数"></el-input>
-			</div>
-
-			<div class="col col-md-1 text-left">
-				<el-button  type='button'>获取验证码</el-button >
-			</div>
-
-		</div>
-	</div>
-
-</div>
-
+<ad-module :isShow='isShow' :showList='showList' :active='active'></ad-module>
+<div class="row text-center" style='padding-top:20px'>
+      <el-button type='danger' @click="next()">下一步</el-button>
+    </div>
 </div>
 </template>
 <script>
   import $ from 'jquery'
+  import adModule from '../components/login/ads.vue'
 export default {
   mounted(){
       $('.tabs').click(function(){
@@ -76,8 +53,9 @@ export default {
     },
   data(){
     return {
-    	phone:'',
-    	msg:''
+      active:1,
+      isShow:'',
+      showList:[true,true,false,false,false,false]
 
     }
   },
@@ -85,9 +63,30 @@ export default {
 
   },
   components:{
-
+adModule
   },
   methods: {
+       next(){
+          if(this.active<4)
+          {
+            this.showList[this.active]=false;
+            this.showList[this.active+1]=true;
+          }
+        else if(this.active==4)
+          {
+            this.showList[0]=false;
+            this.showList[4]=false;
+            this.showList[5]=true
+          }
+            if (this.active++ > 4)
+             {
+              this.active = 1
+              this.showList[0]=true;
+             };
+            console.log(this.active)
+
+    }
+
  
   }
 }

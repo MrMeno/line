@@ -48,6 +48,9 @@
     mounted(){
      
     },
+    created(){
+console.log(this.$router.history.current.fullPath)
+    },
     data() {
       return {
         tv_data:[],
