@@ -58,7 +58,7 @@ export default {
   name: 'item-list',
   mounted(){
   this.listData =this.getList();
-  console.log(this.listData);
+  console.log(this.$store.state.permission);
   },
  ready(){
     },
@@ -80,7 +80,7 @@ export default {
       var datas=[];
         $.ajax({
             type: "GET",
-            url: "/mock.json",
+            url: "/home/drama/solr",
             dataType: "json",
             async: false,
             data:{
@@ -88,8 +88,8 @@ export default {
              page:1
             },
             success: function(resquet) {
-                if (resquet != null) {
-                    datas = resquet;
+                if (resquet.data != null) {
+                    datas = resquet.data;
                 } else {
                     console.log('error')
                 }

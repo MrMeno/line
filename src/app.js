@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { createStore } from './store'
+
 import { createRouter } from './router'
 import { sync } from 'vuex-router-sync'
 // import titleMixin from './util/title'
@@ -31,11 +32,17 @@ export function createApp() {
 
     router.beforeEach(({ meta, path }, from, next) => {　　
         const { auth = true } = meta // meta代表的是to中的meta对象，path代表的是to中的path对象
-        var isLogin = Boolean(store.state.login) // true用户已登录， false用户未登录　
-            　　　　 if (auth && !isLogin && path !== '/main') { // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验 　　　　
-                return next({ path: '/main' }) //  跳转到login页面
-            };
-        var isAdmin = Boolean(store.state.admin)
+        console.log(path)
+        var isLogin = Boolean(store.state.login) // true用户已登录， false用户未登录　　　
+        if (auth && !isLogin && path !== '/main') { // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验 　　　　
+            return next({ path: '/login' }) //  跳转到login页面
+        }
+        if (path != '/main') {
+            store.commit('SET_Menu', false);
+        } else {
+            store.commit('SET_Menu', true);
+        }
+
 
         next() // 进行下一个钩子函数
     })

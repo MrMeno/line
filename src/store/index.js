@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import $ from 'jquery'
 import actions from './actions'
 import mutations from './mutations'
 import getters from './getters'
@@ -13,8 +14,9 @@ export function createStore() {
             admin: false,
             items: {},
             user: '',
+            showDrMenu: true,
             access_token: 'aa',
-            permission: function() { return getPermission() },
+            permission: [],
             lists: {
                 top: [],
                 new: [],

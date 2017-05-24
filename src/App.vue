@@ -26,7 +26,7 @@
         <div class="col col-md-1">
         </div>
        </div>
-      <main-nav :showModules='showModules'></main-nav>
+      <main-nav></main-nav>
      </div>
       <breadcrumb></breadcrumb>
       <router-view class="view"></router-view>
@@ -49,15 +49,14 @@
      
     },
     created(){
-console.log(this.$router.history.current.fullPath)
+// console.log(this.$router.history.current.fullPath)
     },
     data() {
       return {
         tv_data:[],
         film_data:[],
         zy_data:[],
-        net_data:[],
-        showModules:true
+        net_data:[]
       };
     },
     components:{

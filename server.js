@@ -12,6 +12,7 @@ const { createBundleRenderer } = require('vue-server-renderer')
 const isProd = process.env.NODE_ENV === 'production' //全局环境变量，当前为开发环境
 const useMicroCache = process.env.MICRO_CACHE !== 'false' //是否缓存
 const home = require('./function/home')
+const login = require('./function/login')
 const serverInfo =
     `express/${require('express/package.json').version} ` +
     `vue-server-renderer/${require('vue-server-renderer/package.json').version}`; //ssr，服务器端渲染组件的版本
@@ -60,7 +61,8 @@ app.use('/manifest.json', serve('./manifest.json', true))
 app.use('/functions', serve('./api/home', false))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
 app.use('/home', home)
-app.use('/mock.json', serve('./function/data.json', true))
+app.use('/login', login)
+    //app.use('/mock.json', serve('./function/data.json', true))
 
 
 const microCache = LRU({

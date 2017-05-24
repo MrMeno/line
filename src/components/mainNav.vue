@@ -6,7 +6,7 @@
         <div class="col col-md-10">
           <nav class="inner">
             <el-menu :default-active="activeIndex" class="el-menu-def" mode="horizontal" @select="handleSelect">
-              <el-submenu index="1" class='parent-items' v-if='showModules'>
+              <el-submenu index="1" class='parent-items' v-if='$store.state.showDrMenu'>
                 <template slot="title">
                 <i class="fa fa-list" aria-hidden="true"></i>
                 <span class='space'>影视植入资源</span>
@@ -76,7 +76,7 @@
            </div>
           </el-menu-item>
           </el-submenu>
-        <el-menu-item index="1" v-if='!showModules'><router-link to="/main">影视植入资源</router-link></el-menu-item>
+        <el-menu-item index="1" v-if='!$store.state.showDrMenu'><router-link to="/main">影视植入资源</router-link></el-menu-item>
         <el-menu-item index="2"><router-link to="/main">首页</router-link></el-menu-item>
         <el-menu-item index="3"><router-link to="/main/detail">案例咨询</router-link></el-menu-item>
         <el-menu-item index="4">技术支持</el-menu-item>
@@ -164,24 +164,23 @@
 import $ from 'jquery'
      export default {
      name:'main-nav',
-     props:['showModules'],
+     props:[''],
      mouted(){
-     //  this.tv_data.actor=this.dataDeemo('1','1');
-     // this.tv_data.director=this.dataDeemo('1','2');
-     // this.tv_data.swriter=this.dataDeemo('1','3');
-     // this.film_data.actor=this.dataDeemo('2','1');
-     // this.film_data.director=this.dataDeemo('2','2');
-     // this.film_data.swriter=this.dataDeemo('2','3');
-     // this.zy_data.actor=this.dataDeemo('3','1');
-     // this.zy_data.director=this.dataDeemo('3','2');
-     // this.zy_data.swriter=this.dataDeemo('3','3'); 
-     // this.net_data.actor=this.dataDeemo('4','1');
-     // this.net_data.director=this.dataDeemo('4','2');
-     // this.net_data.swriter=this.dataDeemo('4','3'); 
+    this.tv_data.actor=this.dataDeemo('1','1');
+     this.tv_data.director=this.dataDeemo('1','2');
+     this.tv_data.swriter=this.dataDeemo('1','3');
+     this.film_data.actor=this.dataDeemo('2','1');
+     this.film_data.director=this.dataDeemo('2','2');
+     this.film_data.swriter=this.dataDeemo('2','3');
+     this.zy_data.actor=this.dataDeemo('3','1');
+     this.zy_data.director=this.dataDeemo('3','2');
+     this.zy_data.swriter=this.dataDeemo('3','3'); 
+     this.net_data.actor=this.dataDeemo('4','1');
+     this.net_data.director=this.dataDeemo('4','2');
+     this.net_data.swriter=this.dataDeemo('4','3'); 
      },
      data(){
       return {
-
         activeIndex:'1',
          tv_data:[],
         film_data:[],
@@ -240,28 +239,16 @@ import $ from 'jquery'
       showDiv(e){//移入移出事件
       this.type_data=this.getType(e);
         if(e=='1'){
-            this.tv_data.actor=this.dataDeemo('1','1');
-           this.tv_data.director=this.dataDeemo('1','2');
-          this.tv_data.swriter=this.dataDeemo('1','3');
            this.dis_data=this.tv_data;
           this.showThis();    
         }
         else if(e=='2'){
-           this.film_data.actor=this.dataDeemo('2','1');
-          this.film_data.director=this.dataDeemo('2','2');
-          this.film_data.swriter=this.dataDeemo('2','3');
             this.dis_data=this.film_data;
              this.showThis();
         } else if(e=='3'){
-          this.zy_data.actor=this.dataDeemo('3','1');
-     this.zy_data.director=this.dataDeemo('3','2');
-     this.zy_data.swriter=this.dataDeemo('3','3'); 
             this.dis_data=this.zy_data;
               this.showThis();
         }else if(e=='4'){
-           this.net_data.actor=this.dataDeemo('4','1');
-     this.net_data.director=this.dataDeemo('4','2');
-     this.net_data.swriter=this.dataDeemo('4','3'); 
             this.dis_data=this.net_data;
              this.showThis();
         }

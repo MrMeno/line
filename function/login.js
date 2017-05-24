@@ -3,7 +3,7 @@ var http = require('http');
 var router = express.Router();
 
 router.post('/login', function(req, res, next) {
-    var reqJosnData = JSON.stringify(req.body);
+    var reqJosnData = JSON.stringify(req.body); //pohone password
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
@@ -41,7 +41,7 @@ router.post('/login', function(req, res, next) {
     reqPost.write(reqJosnData);
     reqPost.end();
     reqPost.on('error', function(e) {
-        
+
     });
 }).post('/logout', function(req, res, next) {
     var reqJosnData = req.query.access_token;
@@ -53,20 +53,20 @@ router.post('/login', function(req, res, next) {
     var optionspost = {
         host: global.hostAddress,
         port: global.portNum,
-        path: global.ctx + '/logout/'+reqJosnData,
+        path: global.ctx + '/logout/' + reqJosnData,
         method: 'POST',
         headers: postheaders
     };
     // do the POST call  
-     var str = '';
-        http.request(optionspost, function(response) {
-            response.on('data', function(data) {
-                str += data;
-            });
-            response.on('end', function() {
-                res.send(str);
-            });
-        }).end();
+    var str = '';
+    http.request(optionspost, function(response) {
+        response.on('data', function(data) {
+            str += data;
+        });
+        response.on('end', function() {
+            res.send(str);
+        });
+    }).end();
 }).post('/regist', function(req, res, next) {
     var reqJosnData = JSON.stringify(req.body);
     var postheaders = {
@@ -95,28 +95,25 @@ router.post('/login', function(req, res, next) {
     // 发送REST请求时传入JSON数据  
     reqPost.write(reqJosnData);
     reqPost.end();
-    reqPost.on('error', function(e) {
-    });
+    reqPost.on('error', function(e) {});
 }).post('/captcha', function(req, res, next) {
-    var reqJosnData = JSON.stringify(req.body);
+    var userName = req.query.userName;
+    var type = req.query.type;
     var postheaders = {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
+        'Content-Type': 'application/json; charset=UTF-8'
     };
 
     // the post options  
     var optionspost = {
         host: global.hostAddress,
         port: global.portNum,
-        path: global.ctx + '/captcha',
+        path: global.ctx + '/captcha?userName=' + userName + '&type=' + type,
         method: 'POST',
         headers: postheaders
 
     };
-
     // do the POST call  
     var reqPost = http.request(optionspost, function(resPost) {
-
         resPost.on('data', function(d) {
             var json = JSON.parse(d);
             var ret = json.ret;
@@ -126,10 +123,9 @@ router.post('/login', function(req, res, next) {
     });
     // write the json data  
     // 发送REST请求时传入JSON数据  
-    reqPost.write(reqJosnData);
-    reqPost.end();
-    reqPost.on('error', function(e) {
-    });
+    // reqPost.write(reqJosnData);
+    // reqPost.end();
+    reqPost.on('error', function(e) {});
 }).post('/checkVerification', function(req, res, next) {
     var reqJosnData = JSON.stringify(req.body);
     var postheaders = {
@@ -161,11 +157,10 @@ router.post('/login', function(req, res, next) {
     // 发送REST请求时传入JSON数据  
     reqPost.write(reqJosnData);
     reqPost.end();
-    reqPost.on('error', function(e) {
-    });
+    reqPost.on('error', function(e) {});
 }).post('/resetPassword', function(req, res, next) {
     var reqJosnData = JSON.stringify(req.body);
-    var token=req.query.token;
+    var token = req.query.token;
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
@@ -175,7 +170,7 @@ router.post('/login', function(req, res, next) {
     var optionspost = {
         host: global.hostAddress,
         port: global.portNum,
-        path: global.ctx + '/userInfo/resetPassword?token='+token,
+        path: global.ctx + '/userInfo/resetPassword?token=' + token,
         method: 'POST',
         headers: postheaders
 
@@ -198,6 +193,35 @@ router.post('/login', function(req, res, next) {
     reqPost.on('error', function(e) {
 
     });
+}).post('/save', function(req, res, next) {
+    var reqJosnData = JSON.stringify(req.body);
+    var postheaders = {
+        'Content-Type': 'application/json; charset=UTF-8'
+    };
+
+    // the post options  
+    var optionspost = {
+        host: global.hostAddress,
+        port: global.portNum,
+        path: global.ctx + '/register',
+        method: 'POST',
+        headers: postheaders
+
+    };
+    // do the POST call  
+    var reqPost = http.request(optionspost, function(resPost) {
+        resPost.on('data', function(d) {
+            var json = JSON.parse(d);
+            var ret = json.ret;
+            res.send(d);
+
+        });
+    });
+    // write the json data  
+    // 发送REST请求时传入JSON数据  
+    reqPost.write(reqJosnData);
+    reqPost.end();
+    reqPost.on('error', function(e) {});
 });
 
 module.exports = router;
