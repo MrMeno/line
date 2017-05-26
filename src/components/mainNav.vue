@@ -78,7 +78,7 @@
           </el-submenu>
         <el-menu-item index="1" v-if='!$store.state.showDrMenu'><router-link to="/main">影视植入资源</router-link></el-menu-item>
         <el-menu-item index="2"><router-link to="/main">首页</router-link></el-menu-item>
-        <el-menu-item index="3"><router-link to="/main/detail">案例咨询</router-link></el-menu-item>
+        <el-menu-item index="3"><a  target='view_window' href="localhost:8088/main/detail">案例咨询</a></el-menu-item>
         <el-menu-item index="4">技术支持</el-menu-item>
         <el-menu-item index="5">关于我们</el-menu-item>
         <el-menu-item index="6">加入我们</el-menu-item>

@@ -13,11 +13,7 @@
   },
   data(){
     return {
-      phone:'',
-    	msg:'',
-      secNum:'',
-      repNum:'',
-      checked:1
+   
     }
   },
   computed: {

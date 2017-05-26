@@ -4,5 +4,8 @@ export default {
     },
     SET_Menu: (state, vbool) => {
         state.showDrMenu = vbool
+    },
+    SET_LOGIN_STATE: (state, vbool) => {
+        state.login = vbool
     }
 }

@@ -44,12 +44,13 @@
   import menuList from './components/menuList.vue'
   import breadcrumb from './components/breadcrumb.vue'
   import mainNav from './components/mainNav.vue'
+  import {getCookies} from './directives/methods'
   export default {
     mounted(){
-     
-    },
+     this.$store.commit('SET_ACCESS_TOKEN',getCookies('access_token'));
+     console.log(this.$store.state.access_token)
+  },
     created(){
-// console.log(this.$router.history.current.fullPath)
     },
     data() {
       return {
@@ -78,6 +79,7 @@
       changeType(type){
          
       }
+         
     }
   }
 </script>

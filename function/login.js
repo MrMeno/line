@@ -1,9 +1,11 @@
 var express = require('express');
 var http = require('http');
+var qs = require('querystring');
+var bodyParser = require('body-parser');
 var router = express.Router();
-
+//bug：req.body无效
 router.post('/login', function(req, res, next) {
-    var reqJosnData = JSON.stringify(req.body); //pohone password
+    var reqJosnData = qs.stringify(req.body); //pohone password
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
@@ -57,7 +59,7 @@ router.post('/login', function(req, res, next) {
         method: 'POST',
         headers: postheaders
     };
-    // do the POST call  
+    // do the POST call  n
     var str = '';
     http.request(optionspost, function(response) {
         response.on('data', function(data) {
@@ -68,7 +70,16 @@ router.post('/login', function(req, res, next) {
         });
     }).end();
 }).post('/regist', function(req, res, next) {
-    var reqJosnData = JSON.stringify(req.body);
+    var datas = {
+        userName: req.query.userName,
+        type: req.query.type,
+        password: req.query.password,
+        repeatPasswd: req.query.repeatPasswd,
+        email: req.query.email,
+        verification: req.query.verification
+    };
+    var reqJosnData = JSON.stringify(datas);
+    console.log(reqJosnData)
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
@@ -88,7 +99,16 @@ router.post('/login', function(req, res, next) {
     var reqPost = http.request(optionspost, function(resPost) {
 
         resPost.on('data', function(d) {
+            var json = JSON.parse(d);
+            var ret = json.ret;
+            if (ret == 0) {
+                var token = json.msg;
+                if (token != '' && token != undefined) {
+                    res.cookie('access_token', token, { maxAge: 60 * 60 * 1000 * 24 * 2, path: '/' }); //25分钟过期
+                }
+            }
             res.send(d);
+
         });
     });
     // write the json data  
@@ -97,8 +117,12 @@ router.post('/login', function(req, res, next) {
     reqPost.end();
     reqPost.on('error', function(e) {});
 }).post('/captcha', function(req, res, next) {
-    var userName = req.query.userName;
-    var type = req.query.type;
+    var datas = {
+        userName: req.query.userName,
+        type: req.query.type
+    };
+    var reqJosnData = JSON.stringify(datas);
+    console.log(reqJosnData);
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8'
     };
@@ -107,7 +131,7 @@ router.post('/login', function(req, res, next) {
     var optionspost = {
         host: global.hostAddress,
         port: global.portNum,
-        path: global.ctx + '/captcha?userName=' + userName + '&type=' + type,
+        path: global.ctx + '/captcha',
         method: 'POST',
         headers: postheaders
 
@@ -115,16 +139,13 @@ router.post('/login', function(req, res, next) {
     // do the POST call  
     var reqPost = http.request(optionspost, function(resPost) {
         resPost.on('data', function(d) {
-            var json = JSON.parse(d);
-            var ret = json.ret;
             res.send(d);
-
         });
     });
     // write the json data  
     // 发送REST请求时传入JSON数据  
-    // reqPost.write(reqJosnData);
-    // reqPost.end();
+    reqPost.write(reqJosnData);
+    reqPost.end();
     reqPost.on('error', function(e) {});
 }).post('/checkVerification', function(req, res, next) {
     var reqJosnData = JSON.stringify(req.body);
@@ -194,7 +215,25 @@ router.post('/login', function(req, res, next) {
 
     });
 }).post('/save', function(req, res, next) {
-    var reqJosnData = JSON.stringify(req.body);
+    var token = req.query.access_token;
+    var step=req.query.step;
+    var data;
+    if(Number(step)==2)
+    {
+     data = {
+        nickName:req.query.nickName,
+        name:req.query.name,
+        remark:req.query.position//暂替的字段
+    };
+}
+else if(Number(step)==3)
+{
+    data={
+        company:req.query.company
+        //缺省的字段
+    }
+}
+    var reqJosnData = JSON.stringify(data);
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8'
     };
@@ -203,7 +242,7 @@ router.post('/login', function(req, res, next) {
     var optionspost = {
         host: global.hostAddress,
         port: global.portNum,
-        path: global.ctx + '/register',
+        path: global.ctx + '/userInfo?access_token=' + token,
         method: 'POST',
         headers: postheaders
 

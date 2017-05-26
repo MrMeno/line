@@ -26,20 +26,20 @@ export function createRouter() {
                 path: '/login',
                 component: loginPage,
                 meta: {
-                    auth: false //需要验证身份
+                    auth: false 
                 }
             },
             {
                 path: '/regist',
                 component: registPage,
                 meta: {
-                    auth: false //需要验证身份
+                    auth: false 
                 }
-            }, {
+               }, {
                 path: '/main/detail',
                 component: detailPage,
                 meta: {
-                    auth: true //需要验证身份
+                    auth: true 
                 }
             }
         ]
