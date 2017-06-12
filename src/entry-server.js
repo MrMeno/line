@@ -7,7 +7,7 @@
 //最后返回vue实例，将虚拟DOM渲染成网页。服务端会将vuex初始状态也生成到页面中。
 // 如果 vue-router 没有匹配到请求的url，直接返回 Promise中的reject方法，传入404，
 //这时候会走到下方renderStream的error事件，让页面显示错误信息。
-//reated by MrM
+//created by MrM
 import { createApp } from './app'
 
 const isDev = process.env.NODE_ENV !== 'production'

@@ -1,31 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import $ from 'jquery'
-import actions from './actions'
 import mutations from './mutations'
 import getters from './getters'
 import { getPermission } from '../util/permit'
+import Cookies from 'js-cookie';
 
 Vue.use(Vuex)
 export function createStore() {
     return new Vuex.Store({
         state: {
-            login: false,
+            login: !Cookies.get('access_token')=='',
             admin: false,
             items: {},
+            cookies:'',
             user: '',
             showDrMenu: true,
-            access_token: 'aa',
+            access_token: Cookies.get('access_token')||'',
             permission: [],
-            lists: {
-                top: [],
-                new: [],
-                show: [],
-                ask: [],
-                job: []
-            }
+            url:['/main'],
         },
-        actions,
         mutations,
         getters
     })

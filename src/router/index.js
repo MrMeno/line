@@ -3,12 +3,14 @@ import Router from 'vue-router'
 import store from '../store'
 import mainPage from '../views/ItemList.vue'
 import detailPage from '../views/ItemView.vue'
-import loginPage from '../views/login.vue'
+import psdPage from '../views/psd.vue'
 import registPage from '../views/regist.vue'
+import userPage from '../views/userCenter.vue'
+import infoPage from '../views/user/userInfo.vue'
+import proPage from '../views/user/proManage.vue'
+import pubPage from '../views/user/pubMedia.vue'
 
 Vue.use(Router)
-
-
 
 export function createRouter() {
     return new Router({
@@ -23,8 +25,8 @@ export function createRouter() {
                 component: mainPage
             },
             {
-                path: '/login',
-                component: loginPage,
+                path: '/psd',
+                component: psdPage,
                 meta: {
                     auth: false 
                 }
@@ -33,14 +35,39 @@ export function createRouter() {
                 path: '/regist',
                 component: registPage,
                 meta: {
-                    auth: false 
+                    auth: false
                 }
                }, {
-                path: '/main/detail',
+                path: '/detail',
                 component: detailPage,
                 meta: {
-                    auth: true 
+                    auth: true
                 }
+            },
+             {
+                path: '/userCenter',
+                component: userPage,
+                meta: {
+                    auth: true 
+                },
+                children:[
+                    {
+                    path: '',
+                    component: infoPage
+                    },
+                    {
+                     path: '/userCenter/info',
+                      component: infoPage
+                    },
+                    { 
+                    path: '/userCenter/proManage',
+                     component: proPage
+                    },
+                      { 
+                    path: '/userCenter/pubMedia',
+                     component: pubPage
+                    }
+                ]
             }
         ]
     });

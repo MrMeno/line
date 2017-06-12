@@ -1,3 +1,9 @@
+/*!
+ * 公用方法：created by ミンヤング
+ * last modified :31/05/2017  
+ *
+ */
+
 export function animate(obj, json, interval, sp, fn) {
     clearInterval(obj.timer);
 
@@ -62,12 +68,11 @@ export function checks(datas) {
                   case 'repNum':
                      i='重复密码'
                   break;
-
                    case 'email':
                      i='邮箱'
                   break;
                  default:
-                 i='参数'
+                 i='信息'
                 }
             tips = i + '未填写'; //赋值未终止之前禁止return
             break;
@@ -96,4 +101,31 @@ export function getCookies(name) {
 }
 export function delCookies(name) {
     setCookies(name, '', -1)
+}
+
+export function parseCookie(cookie) {
+        var cookies = {};
+        if (!cookie) {
+                return cookie;
+        }
+        var list = cookie.split(';');
+        for (var i = 0; i < list.length; i++) {
+                var pair = list[i].split('=');
+                cookies[pair[0].trim()] = pair[1];
+        }
+        return cookies;
+}
+
+export function serialize (name, val, opt) {
+        var pairs = [name + '=' + val];
+        opt = opt || {};
+
+        if (opt.maxAge) pairs.push('Max-Age=' + opt.maxAge);
+        if (opt.domain) pairs.push('Domain=' + opt.domain);
+        if (opt.path) pairs.push('Path=' + opt.path);
+        if (opt.expires) pairs.push('Expires=' + opt.exppires.toUTCString());
+        if (opt.httpOnly) pairs.push('HttpOnly');
+        if (opt.secure) pairs.push('Secure');
+
+        return pairs.join(';');
 }

@@ -5,7 +5,11 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 //bug：req.body无效
 router.post('/login', function(req, res, next) {
-    var reqJosnData = qs.stringify(req.body); //pohone password
+    var data={
+        userName:req.query.userName,
+        password:req.query.password
+    }
+    var reqJosnData = JSON.stringify(data); //pohone password
     var postheaders = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Content-Length': Buffer.byteLength(reqJosnData, 'utf8')
@@ -20,7 +24,6 @@ router.post('/login', function(req, res, next) {
         headers: postheaders
 
     };
-
     // do the POST call  
     var reqPost = http.request(optionspost, function(resPost) { //req.cookies.access_token
 
@@ -37,7 +40,6 @@ router.post('/login', function(req, res, next) {
 
         });
     });
-
     // write the json data  
     // 发送REST请求时传入JSON数据  
     reqPost.write(reqJosnData);
@@ -261,6 +263,48 @@ else if(Number(step)==3)
     reqPost.write(reqJosnData);
     reqPost.end();
     reqPost.on('error', function(e) {});
+}).get('/job', function(req, res, next) { //获取该类型下的type列表
+    const type = req.query.type; //123:电视剧，电影，综艺
+    var getheaders = {
+        'Content-Type': 'application/json; charset=UTF-8'
+    };
+    var optionspost = {
+        host: global.hostAddress,
+        port: global.portNum,
+        path: global.ctx + '/dictionary/job',
+        method: 'GET',
+        headers: getheaders
+    };
+    var str = '';
+    http.request(optionspost, function(response){
+        response.on('data', function(data) {
+            str += data;
+        });
+        response.on('end', function(){
+            res.send(str);
+        });
+    }).end();
+}).get('/industry', function(req, res, next) { //获取该类型下的type列表
+    const type = req.query.type; //123:电视剧，电影，综艺
+    var getheaders = {
+        'Content-Type': 'application/json; charset=UTF-8'
+    };
+    var optionspost = {
+        host: global.hostAddress,
+        port: global.portNum,
+        path: global.ctx + '/dictionary/industry',
+        method: 'GET',
+        headers: getheaders
+    };
+    var str = '';
+    http.request(optionspost, function(response){
+        response.on('data', function(data) {
+            str += data;
+        });
+        response.on('end', function(){
+            res.send(str);
+        });
+    }).end();
 });
 
 module.exports = router;

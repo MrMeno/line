@@ -7,7 +7,8 @@ const LRU = require('lru-cache')
 const express = require('express')
 const favicon = require('serve-favicon')
 const compression = require('compression')
-const bodyParser = require('body-parser');
+ const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
 const isProd = process.env.NODE_ENV === 'production' //全局环境变量，当前为开发环境
@@ -20,8 +21,8 @@ const serverInfo =
 const app = express()
 const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8') //前端入口模板文件
 
-global.hostAddress = '192.168.1.202'; //192.168.1.202
-global.portNum = '80'; //8083
+global.hostAddress = 'localhost'; //192.168.1.202
+global.portNum = '8080'; //8083
 global.ctx = '/mmcms/api'; //mmcms
 
 function createRenderer(bundle, options) { //设置服务器端渲染参数
@@ -35,6 +36,7 @@ function createRenderer(bundle, options) { //设置服务器端渲染参数
         runInNewContext: false
     }))
 }
+
 
 let renderer
 let readyPromise
@@ -56,6 +58,11 @@ const serve = (path, cache) => express.static(resolve(path), { //获取完整路
 
 app.use(compression({ threshold: 0 })) //环参应用
     // app.use(favicon('./public/img/favicon.ico'))
+app.use(cookieParser())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 app.use('/manifest.json', serve('./manifest.json', true))
@@ -64,7 +71,12 @@ app.use('/service-worker.js', serve('./dist/service-worker.js'))
 app.use('/home', home)
 app.use('/login', login)
     //app.use('/mock.json', serve('./function/data.json', true))
-
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    next();
+});
 
 const microCache = LRU({
     max: 100,
@@ -120,6 +132,13 @@ function render(req, res) {
 
 app.get('*', isProd ? render : (req, res) => { //判定开发环境
     readyPromise.then(() => render(req, res))
+})
+app.get('*', (req, res) => {
+    const context = {
+        url: req.url,
+        cookies: req.cookies
+    }
+    const renderStream = renderer.renderToStream(context)
 })
 
 const port = process.env.PORT || 8088 //端口监听开启

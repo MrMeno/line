@@ -1,5 +1,5 @@
 <template>
-<div class="container" style='min-height:600px'>
+<div class="container" style='min-height:600px;background-color:white;padding:50px 0px'>
 <div class="row text-center">
 <div class="col col-md-2"></div>
 <div class="col col-md-8">
@@ -107,18 +107,34 @@
         昵称
       </div>
       <div class="col col-md-4 text-left">
-        <el-input v-model="nickName"  placeholder="请填写电话" style='width:100%'></el-input>
+        <el-input v-model="nickName"  placeholder="请填写昵称" style='width:100%'></el-input>
       </div>
     </div>
      <div class="row" style='padding-top:20px'>
       <div class="col col-md-4 text-right" style='line-height:30px'>
         职位
       </div>
-      <div class="col col-md-4 text-left">
-        <el-input v-model="position"  placeholder="请填写职位" style='width:100%'></el-input>
+      <div class="col col-md-2 text-left">
+        <el-select v-model="selectJob" placeholder="请选择职位" style='width:100%'>
+        <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+    </el-select>
+      </div>
+      <div class="col col-md-2">
+           <el-select v-model="selectJob" placeholder="请选择职位" style='width:100%'>
+        <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+    </el-select>
       </div>
     </div>
-  
   
 </div>
 <div class="row" style='padding-top:50px' v-else-if="active==3">
@@ -138,10 +154,10 @@
       <div class="col col-md-4 text-left">
           <el-select v-model="category" placeholder="公司所属行业" style='width:100%'>
         <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
+      v-for="item in jobOption"
+      :key="item.id"
+      :label="item.nameCn"
+      :value="item.id">
     </el-option>
     </el-select>
       </div>
@@ -196,6 +212,10 @@
   export default {
   mounted(){
   this.active=this.getActive();
+  console.log(this.active);
+  this.catchJob();
+  this.catchIndu();
+  console.log(this.jobOption)
   },
   created(){
   },
@@ -222,22 +242,9 @@
       position:'',
       counter:true,
       timer:60,
-      options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+      jobOption:[],
+      selectJob:'',
+      options: [],
         vTrade:'',
         category:'',
     }
@@ -251,10 +258,11 @@
        next(){
          let self=this;
          var rules=self.registCheck();
-         if(self.checked)
-         {
+         // if(self.checked)
+         // {
            if(this.active==1){
-                
+                if(self.checked)
+                {
                 if(rules.r)//输入验证满足为true
                 { 
                   self.regist();//执行登录方法并返回登录状态
@@ -263,20 +271,29 @@
                 else{
                     self.$alert(rules.t, '提示', {
                   confirmButtonText: '确定'
-               });
+                });
                return 
                 }
+              }
+              else{
+                     self.$alert('您还未同意服务条款', '提示', {
+               confirmButtonText: '确定'
+             })
+                  return
+              }
+
             }
           if(this.active<4)
           {
             if(this.active==2)
             {
               this.save()
+              setCookies("status_"+getCookies('username'),'3',365*2);
              
             }
             else if(this.active==3){
               this.save()
-              setCookies("status",getCookies('username')+'_4',365*2);
+              setCookies("status_"+getCookies('username'),'4',365*2);
             }
           }
              this.active+=1;
@@ -285,33 +302,24 @@
                this.active=4;
                this.sBtn=false;
            };
-         }
-         else{
-           self.$alert('您还未同意服务条款', '提示', {
-               confirmButtonText: '确定'
-         })
-         }
+         // }
+         // else{
+         //   self.$alert('您还未同意服务条款', '提示', {
+         //       confirmButtonText: '确定'
+         // })
+         // }
        },
        onCheck(){
         this.checked=!this.checked;
        },
       getActive(){
-        var arr=getCookies('status');
+        var status=getCookies('status_'+getCookies('username'));
         var token=getCookies('access_token');
-        var user='';var actives=1;
-        if(arr!=undefined&&token!=undefined)
+        var actives=1;
+        if(status!=undefined&&token!=undefined)
         {
-          arr=arr.split('_');
-          user=arr[0];
-          actives=arr[1];
-          if(user!=''&&actives!=null)
-          {
-            actives= Number(actives);
-          }
-          else{
-            actives=1;
-          }
-          return actives
+          actives=status;
+          return Number(actives)
         }
         else{
           return 1
@@ -342,13 +350,14 @@
             .then(function(response){
             if(response.data.ret==0){
               self.$store.commit('SET_ACCESS_TOKEN',response.data.msg);
-              setCookies('access_token',response.data.msg,2);
+              setCookies('access_token',response.data.msg,0.0209);
               setCookies('username',self.userName,2);
-               setCookies("status",getCookies('username')+'_2',365*2);
+               setCookies("status_"+self.userName,'2',365*2);
               self.$alert('恭喜您已成功注册媒大媒小系统，请完善个人信息', '提示', {
                confirmButtonText: '确定',
                callback:function(){
                     self.$store.commit('SET_LOGIN_STATE',true);
+                    window.location.reload();
                }});
             }
             else{
@@ -368,6 +377,32 @@
         this.b_class=true;
       }
 
+    },
+    catchJob(){
+      let self=this;
+       axios.get('login/job').then(function(req){
+       if(req.data.ret==0){
+            self.jobOption=req.data.data;
+       }
+       else
+       {
+      self.$alert(response.data.msg, '提示', {
+               confirmButtonText: '确定'});
+       }
+       })
+    },
+     catchIndu(){
+      let self=this;
+       axios.get('login/industry').then(function(req){
+           if(req.data.ret==0){
+     self.indption=req.data.data;
+       }
+       else
+       {
+      self.$alert(response.data.msg, '提示', {
+               confirmButtonText: '确定'});
+       }
+       })
     },
     timeCount(){
       let self=this;

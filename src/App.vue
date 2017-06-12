@@ -1,7 +1,7 @@
 <template>
   <div id="app" class='content'>
     <div class="container-fluid" style='padding:0px'>
-      <div class="row" style='padding:10px'>
+      <div class="row" style='padding:10px;background-color:white'>
         <div class="col col-md-1">
         </div>
         <div class="col col-md-10">
@@ -28,7 +28,7 @@
        </div>
       <main-nav></main-nav>
      </div>
-      <breadcrumb></breadcrumb>
+     <!--  <breadcrumb></breadcrumb> -->
       <router-view class="view"></router-view>
      <div class="row"  style='padding-top:30px'>          
       <footers ></footers>
@@ -40,24 +40,28 @@
 <script>
   import {animate} from './directives/methods'
   import $ from 'jquery'
+  import axios from 'axios'
   import footers from './components/footer.vue'
   import menuList from './components/menuList.vue'
   import breadcrumb from './components/breadcrumb.vue'
   import mainNav from './components/mainNav.vue'
   import {getCookies} from './directives/methods'
   export default {
-    mounted(){
-     this.$store.commit('SET_ACCESS_TOKEN',getCookies('access_token'));
-     console.log(this.$store.state.access_token)
-  },
     created(){
+
     },
+    mounted(){
+     // this.$store.commit('SET_LOGIN_STATE',getCookies('access_token')!=undefined);
+     console.log(this.$store.state.access_token);
+     this.getPermisstionList();
+  },
     data() {
       return {
         tv_data:[],
         film_data:[],
         zy_data:[],
-        net_data:[]
+        net_data:[],
+        url:[]
       };
     },
     components:{
@@ -78,6 +82,12 @@
       },
       changeType(type){
          
+      },
+      getPermisstionList(){
+        var params='?access_token='+getCookies('access_token');
+        axios.get('/home/permission'+params).then(function(res){
+                 console.log(res.data)
+        })
       }
          
     }
@@ -86,17 +96,18 @@
 
 <style>
   @import '../public/css/element-ui/lib/theme-default/index.css';
-  @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+  @import '../public/css/bootsrap/dist/css/bootstrap.css';
   @import '../node_modules/font-awesome/css/font-awesome.css';
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Microsoft YaHei", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     font-size: 15px;
-    background-color: white;
+    background-color: #f1f2f3;
     margin: 0;
     padding-top: 0px;
     color: #34495e;
     overflow-y: scroll;
+
   }
   
   .content {
@@ -112,7 +123,7 @@
   
   .views {
     padding: 0px;
-    background-color:#eee
+    background-color:#f1f2f3
   }
   .parent-items ul{
     border-radius:0px!important;
